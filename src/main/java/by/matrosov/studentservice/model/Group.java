@@ -10,7 +10,4 @@ public class Group {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "group_id")
     private long groupId;
-
-    @OneToOne(mappedBy = "groups")
-    private Student student;
 }
