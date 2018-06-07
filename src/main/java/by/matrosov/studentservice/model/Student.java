@@ -10,7 +10,7 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "student_id")
-    private int studentId;
+    private long studentId;
 
     @Column(name = "first_name")
     private String firstName;
@@ -28,7 +28,9 @@ public class Student {
     @Column(name = "sex")
     private char sex;
 
-    private int groupId;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="group_id")
+    private Group group;
 
     @Column(name = "education_year")
     private int educationYear;
