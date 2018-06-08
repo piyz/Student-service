@@ -38,4 +38,14 @@ public class StudentServiceImpl implements StudentService{
     public List<Student> getStudentsBySex(Character sex) {
         return studentDao.getStudentsBySex(sex);
     }
+
+    @Override
+    public List<Student> getAllStudents() {
+        return studentDao.findAll();
+    }
+
+    @Override
+    public List<Group> getAllGroups() {
+        return groupDao.findAll();
+    }
 }
