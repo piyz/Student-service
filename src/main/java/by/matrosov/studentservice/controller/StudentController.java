@@ -1,5 +1,6 @@
 package by.matrosov.studentservice.controller;
 
+import by.matrosov.studentservice.model.Group;
 import by.matrosov.studentservice.model.Student;
 import by.matrosov.studentservice.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,17 +23,26 @@ public class StudentController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView home(){
+    public ModelAndView getStudents(){
         ModelAndView modelAndView = new ModelAndView();
         List<Student> studentList = studentService.getAllStudents();
         modelAndView.addObject("studentList", studentList);
-        modelAndView.setViewName("home");
+        modelAndView.setViewName("students");
+        return modelAndView;
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ModelAndView getGroups(){
+        ModelAndView modelAndView = new ModelAndView();
+        List<Group> groupList = studentService.getAllGroups();
+        modelAndView.addObject("groupList", groupList);
+        modelAndView.setViewName("groups");
         return modelAndView;
     }
 
     @RequestMapping(value = "/delete_student", method = RequestMethod.GET)
-    public String handleDeleteUser(@RequestParam(name="studentId") long studentId) {
+    public String deleteStudent(@RequestParam(name="studentId") long studentId) {
         studentService.removeStudent(studentId);
-        return "redirect:/home";
+        return "redirect:/students";
     }
 }
