@@ -48,4 +48,9 @@ public class StudentServiceImpl implements StudentService{
     public List<Group> getAllGroups() {
         return groupDao.findAll();
     }
+
+    @Override
+    public void removeStudent(long studentId) {
+        studentDao.deleteById(studentId);
+    }
 }

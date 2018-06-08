@@ -12,4 +12,5 @@ public interface StudentService {
     List<Student> getStudentsBySex(Character sex);
     List<Student> getAllStudents();
     List<Group> getAllGroups();
+    void removeStudent(long studentId);
 }
