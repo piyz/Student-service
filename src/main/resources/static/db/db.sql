@@ -16,3 +16,13 @@ create table students
 
 create index students_groups_group_id_fk
   on students (group_id);
+
+-- auto-generated definition
+create table groups
+(
+  group_id     int auto_increment
+    primary key,
+  group_name   varchar(26) not null,
+  curator_name varchar(26) not null,
+  specialty    varchar(26) not null
+);
