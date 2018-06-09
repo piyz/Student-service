@@ -36,31 +36,34 @@
                 </tr>
             </table>
 
-            <form th:action="@{/add_student}" th:object="${}" method="post">
-                <table>
-                    <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Patronymic</th>
-                        <th>Birthday</th>
-                        <th>Sex</th>
-                        <th>Group Id</th>
-                        <th>Education Year</th>
-                    </tr>
-                    <tr>
-                        <td><input type="text" th:field="*{}" placeholder="FIRST NAME"/></td>
-                        <td><input type="text" th:field="*{}" placeholder="LAST NAME"/></td>
-                        <td><input type="text" th:field="*{}" placeholder="PATRONYMIC"/></td>
-                        <td><input type="date" th:field="*{}" placeholder="BIRTHDAY"/></td>
-                        <td><input type="text" th:field="*{}" placeholder="SEX"/></td>
-                        <td><input type="text" th:field="*{}" placeholder="GROUP"/></td>
-                        <td><input type="text" th:field="*{}" placeholder="EDUCATION YEAR"/></td>
-                        <td>
-                            <button type="submit">Add</button>
-                        </td>
-                    </tr>
-                </table>
-            </form>
+            <div>
+                <form th:action="@{/student_add}" th:object="${student}" method="post">
+                    <table>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Patronymic</th>
+                            <!-- <th>Birthday</th> -->
+                            <th>Sex</th>
+                            <th>Group Id</th>
+                            <th>Education Year</th>
+                        </tr>
+                        <tr>
+                            <td><input type="text" th:field="*{firstName}" placeholder="FIRST NAME"/></td>
+                            <td><input type="text" th:field="*{lastName}" placeholder="LAST NAME"/></td>
+                            <td><input type="text" th:field="*{patronymic}" placeholder="PATRONYMIC"/></td>
+                            <!-- <td><input type="date" th:field="*{birthday}" placeholder="BIRTHDAY"/></td> -->
+                            <td><input type="text" th:field="*{sex}" placeholder="SEX"/></td>
+                            <td><input type="text" th:field="*{group}" placeholder="GROUP"/></td>
+                            <td><input type="text" th:field="*{educationYear}" placeholder="EDUCATION YEAR"/></td>
+                            <td>
+                                <button type="submit">Add</button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+
         </div>
     </div>
 </body>

@@ -6,6 +6,7 @@ import by.matrosov.studentservice.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,12 +24,17 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET) //add value = "/students"
     public ModelAndView getStudents(){
         ModelAndView modelAndView = new ModelAndView();
         List<Student> studentList = studentService.getAllStudents();
         modelAndView.addObject("studentList", studentList);
         modelAndView.setViewName("students");
+
+        //for add student need to create new student here? hello
+        //need to check model.contains('attribute') ? or don't
+        modelAndView.addObject("student", new Student());
+        //------------------------------------------------------
         return modelAndView;
     }
 
@@ -69,6 +75,14 @@ public class StudentController {
 
         return "redirect:/students";
     }
+
+    @RequestMapping(value = "/student/add", method = RequestMethod.POST)
+    public String addStudent(Student student){
+        //add @valid, bindingResult
+        studentService.editStudent(student); //rename on save
+        return "redirect:/students";
+    }
+
 
     //:TODO "add student" button with select options, button on <td></td> section
 }
