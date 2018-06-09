@@ -69,4 +69,6 @@ public class StudentController {
 
         return "redirect:/students";
     }
+
+    //:TODO "add student" button with select options, button on <td></td> section
 }
