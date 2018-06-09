@@ -30,7 +30,8 @@
                     <td th:text="${student.group}"></td>
                     <td th:text="${student.educationYear}"></td>
                     <td>
-                        <a th:href="@{/delete_student(studentId=${student.studentId})}" class="btn btn-danger">Delete</a>
+                        <a th:href="@{/delete_student(studentId=${student.studentId})}">Delete</a>
+                        <a th:href="@{/edit_student(studentId=${student.studentId})}">Edit</a>
                     </td>
                 </tr>
             </table>
