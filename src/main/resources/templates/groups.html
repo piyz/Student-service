@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Groups page</title>
+</head>
+<body>
+    <p>Hello groups</p>
+    <div class="container">
+        <div th:if="${not #lists.isEmpty(groupList)}">
+            <h2>Table of Users</h2>
+            <table class="table table-striped">
+                <tr>
+                    <th>Id</th>
+                    <th>Group Name</th>
+                    <th>Curator</th>
+                    <th>Specialty</th>
+                </tr>
+                <tr th:each="group : ${groupList}">
+                    <td th:text="${group.groupId}"></td>
+                    <td th:text="${group.groupName}"></td>
+                    <td th:text="${group.curatorName}"></td>
+                    <td th:text="${group.specialty}"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
