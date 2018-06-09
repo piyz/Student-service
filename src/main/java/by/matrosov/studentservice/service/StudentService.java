@@ -14,4 +14,5 @@ public interface StudentService {
     List<Group> getAllGroups();
     void removeStudent(long studentId);
     Student getStudentById(long studentId);
+    void editStudent(Student student);
 }

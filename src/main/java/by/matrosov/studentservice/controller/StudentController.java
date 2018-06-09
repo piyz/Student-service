@@ -32,7 +32,7 @@ public class StudentController {
         return modelAndView;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/groups", method = RequestMethod.GET)
     public ModelAndView getGroups(){
         ModelAndView modelAndView = new ModelAndView();
         List<Group> groupList = studentService.getAllGroups();
@@ -55,8 +55,18 @@ public class StudentController {
     }
 
     @RequestMapping(value = "/edit_student", method = RequestMethod.POST)
-    public String editStudent(@RequestParam(name = "studentId") long studentId){
-        //impl saveUser in studentService
+    public String editStudent(@RequestParam(name = "studentId") long studentId, Student student){
+        //impl errors with binding result
+        //add @valid to student
+        //check null
+        Student studentExist = studentService.getStudentById(studentId);
+
+        studentExist.setFirstName(student.getFirstName());
+        studentExist.setLastName(student.getLastName());
+
+        studentService.editStudent(studentExist);
+        //model.addAttribute("studentId", studentExist);
+
         return "redirect:/students";
     }
 }
