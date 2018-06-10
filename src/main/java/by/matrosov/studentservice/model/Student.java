@@ -21,7 +21,7 @@ public class Student {
     @Column(name = "patronymic")
     private String patronymic;
 
-    //@DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
     @Column(name = "birthday")
     private Date birthday;
 

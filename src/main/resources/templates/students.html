@@ -17,7 +17,7 @@
                     <th>Patronymic</th>
                     <th>Birthday</th>
                     <th>Sex</th>
-                    <th>Group Id</th>
+                    <th>Group</th>
                     <th>Education Year</th>
                 </tr>
                 <tr th:each="student : ${studentList}">
@@ -27,7 +27,7 @@
                     <td th:text="${student.patronymic}"></td>
                     <td th:text="${student.birthday}"></td>
                     <td th:text="${student.sex}"></td>
-                    <td th:text="${student.group}"></td>
+                    <td th:text="${student.group.groupName}"></td>
                     <td th:text="${student.educationYear}"></td>
                     <td>
                         <a th:href="@{/student/delete(studentId=${student.studentId})}">Delete</a>
