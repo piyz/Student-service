@@ -30,14 +30,14 @@
                     <td th:text="${student.group}"></td>
                     <td th:text="${student.educationYear}"></td>
                     <td>
-                        <a th:href="@{/delete_student(studentId=${student.studentId})}">Delete</a>
-                        <a th:href="@{/edit_student(studentId=${student.studentId})}">Edit</a>
+                        <a th:href="@{/student/delete(studentId=${student.studentId})}">Delete</a>
+                        <a th:href="@{/student/edit(studentId=${student.studentId})}">Edit</a>
                     </td>
                 </tr>
             </table>
 
             <div>
-                <form th:action="@{/student_add}" th:object="${student}" method="post">
+                <form th:action="@{/student/add}" th:object="${student}" method="post">
                     <table>
                         <tr>
                             <th>First Name</th>

@@ -47,20 +47,20 @@ public class StudentController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/delete_student", method = RequestMethod.GET)
+    @RequestMapping(value = "/student/delete", method = RequestMethod.GET)
     public String deleteStudent(@RequestParam(name = "studentId") long studentId) {
         studentService.removeStudent(studentId);
         return "redirect:/students";
     }
 
-    @RequestMapping(value = "/edit_student", method = RequestMethod.GET)
+    @RequestMapping(value = "/student/edit", method = RequestMethod.GET)
     public String getEditStudentPage(@RequestParam(name = "studentId") long studentId, Model model){
         Student student = studentService.getStudentById(studentId);
         model.addAttribute("student", student);
         return "student-edit";
     }
 
-    @RequestMapping(value = "/edit_student", method = RequestMethod.POST)
+    @RequestMapping(value = "/student/edit", method = RequestMethod.POST)
     public String editStudent(@RequestParam(name = "studentId") long studentId, Student student){
         //impl errors with binding result
         //add @valid to student

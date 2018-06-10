@@ -6,7 +6,7 @@
 </head>
 <body>
     <div class="container">
-        <form th:action="@{/edit_student(studentId=${student.studentId})}" th:object="${student}" method="post">
+        <form th:action="@{/student/edit(studentId=${student.studentId})}" th:object="${student}" method="post">
             <div>
                 <input type="text" th:field="*{firstName}" placeholder="FIRST NAME"/>
             </div>
