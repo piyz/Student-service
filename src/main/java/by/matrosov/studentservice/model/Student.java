@@ -98,4 +98,8 @@ public class Student {
     public void setEducationYear(int educationYear) {
         this.educationYear = educationYear;
     }
+
+    public void setGroup(long groupId) {
+        this.group.setGroupId(groupId);
+    }
 }

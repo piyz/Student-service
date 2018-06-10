@@ -98,7 +98,11 @@ public class StudentController {
 
     @RequestMapping(value = "groups/move", method = RequestMethod.GET)
     public String moveGroup(@RequestParam(name = "groupId") long groupId){
-        //:TODO this
+        Group currentGroup = studentService.getGroupById(groupId);
+        long currentGroupName = Long.parseLong(currentGroup.getGroupName());
+        long newGroupName = currentGroupName + 100;
+        currentGroup.setGroupName(String.valueOf(newGroupName));
+        studentService.saveGroup(currentGroup);
         return "redirect:/groups";
     }
 

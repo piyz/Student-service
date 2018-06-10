@@ -16,4 +16,6 @@ public interface StudentService {
     Student getStudentById(long studentId);
     void editStudent(Student student);
     List<Student> getStudentsByGroupId(long groupId);
+    Group getGroupById(long groupId);
+    void saveGroup(Group group);
 }

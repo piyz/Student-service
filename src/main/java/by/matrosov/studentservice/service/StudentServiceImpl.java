@@ -68,4 +68,14 @@ public class StudentServiceImpl implements StudentService{
     public List<Student> getStudentsByGroupId(long groupId) {
         return studentDao.getStudentsByGroup_GroupId(groupId);
     }
+
+    @Override
+    public Group getGroupById(long groupId) {
+        return groupDao.findGroupByGroupId(groupId);
+    }
+
+    @Override
+    public void saveGroup(Group group) {
+        groupDao.save(group);
+    }
 }
