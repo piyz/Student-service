@@ -37,6 +37,7 @@
             </table>
 
             <div>
+                <h3>Here u can add new student</h3>
                 <form th:action="@{/student/add}" th:object="${student}" method="post">
                     <table>
                         <tr>
@@ -45,7 +46,7 @@
                             <th>Patronymic</th>
                             <!-- <th>Birthday</th> -->
                             <th>Sex</th>
-                            <th>Group Id</th>
+                            <th>Group</th>
                             <th>Education Year</th>
                         </tr>
                         <tr>

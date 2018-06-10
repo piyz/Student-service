@@ -95,4 +95,17 @@ public class StudentController {
         array[1] = 'ж';
         return array;
     }
+
+    @RequestMapping(value = "groups/move", method = RequestMethod.GET)
+    public String moveGroup(@RequestParam(name = "groupId") long groupId){
+        //:TODO this
+        return "redirect:/groups";
+    }
+
+    @RequestMapping(value = "groups/open", method = RequestMethod.GET)
+    public String openGroup(@RequestParam(name = "groupId") long groupId, Model model){
+        List<Student> studentList = studentService.getStudentsByGroupId(groupId);
+        model.addAttribute("studentList", studentList);
+        return "groups-open";
+    }
 }

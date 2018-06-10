@@ -63,4 +63,9 @@ public class StudentServiceImpl implements StudentService{
     public void editStudent(Student student) {
         studentDao.save(student);
     }
+
+    @Override
+    public List<Student> getStudentsByGroupId(long groupId) {
+        return studentDao.getStudentsByGroup_GroupId(groupId);
+    }
 }

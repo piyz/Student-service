@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Group members</title>
+</head>
+<body>
+    <div class="container">
+        <div th:if="${not #lists.isEmpty(studentList)}">
+            <h2>Group members</h2>
+            <table>
+                <tr>
+                    <th>Id</th>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Patronymic</th>
+                    <th>Gender</th>
+                    <th>Birthday</th>
+                </tr>
+                <tr th:each="student : ${studentList}">
+                    <td th:text="${student.studentId}"></td>
+                    <td th:text="${student.firstName}"></td>
+                    <td th:text="${student.lastName}"></td>
+                    <td th:text="${student.patronymic}"></td>
+                    <td th:text="${student.sex}"></td>
+                    <td th:text="${student.birthday}"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
