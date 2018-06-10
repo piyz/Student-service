@@ -45,11 +45,6 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
-    public List<Group> getAllGroups() {
-        return groupDao.findAll();
-    }
-
-    @Override
     public void removeStudent(long studentId) {
         studentDao.deleteById(studentId);
     }
@@ -67,15 +62,5 @@ public class StudentServiceImpl implements StudentService{
     @Override
     public List<Student> getStudentsByGroupId(long groupId) {
         return studentDao.getStudentsByGroup_GroupId(groupId);
-    }
-
-    @Override
-    public Group getGroupById(long groupId) {
-        return groupDao.findGroupByGroupId(groupId);
-    }
-
-    @Override
-    public void saveGroup(Group group) {
-        groupDao.save(group);
     }
 }

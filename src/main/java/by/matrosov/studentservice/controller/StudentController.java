@@ -2,6 +2,7 @@ package by.matrosov.studentservice.controller;
 
 import by.matrosov.studentservice.model.Group;
 import by.matrosov.studentservice.model.Student;
+import by.matrosov.studentservice.service.GroupService;
 import by.matrosov.studentservice.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,9 +20,12 @@ public class StudentController {
 
     private final StudentService studentService;
 
+    private final GroupService groupService;
+
     @Autowired
-    public StudentController(StudentService studentService) {
+    public StudentController(StudentService studentService, GroupService groupService) {
         this.studentService = studentService;
+        this.groupService = groupService;
     }
 
     @RequestMapping(method = RequestMethod.GET) //add value = "/students"
@@ -41,7 +45,7 @@ public class StudentController {
     @RequestMapping(value = "/groups", method = RequestMethod.GET)
     public ModelAndView getGroups(){
         ModelAndView modelAndView = new ModelAndView();
-        List<Group> groupList = studentService.getAllGroups();
+        List<Group> groupList = groupService.getAllGroups();
         modelAndView.addObject("groupList", groupList);
         modelAndView.setViewName("groups");
         return modelAndView;
@@ -85,7 +89,7 @@ public class StudentController {
 
     @ModelAttribute("allGroups")
     public List<Group> getAllGroups(){
-        return studentService.getAllGroups();
+        return groupService.getAllGroups();
     }
 
     @ModelAttribute("genderOptions")
@@ -98,11 +102,11 @@ public class StudentController {
 
     @RequestMapping(value = "groups/move", method = RequestMethod.GET)
     public String moveGroup(@RequestParam(name = "groupId") long groupId){
-        Group currentGroup = studentService.getGroupById(groupId);
+        Group currentGroup = groupService.getGroupById(groupId);
         long currentGroupName = Long.parseLong(currentGroup.getGroupName());
         long newGroupName = currentGroupName + 100;
         currentGroup.setGroupName(String.valueOf(newGroupName));
-        studentService.saveGroup(currentGroup);
+        groupService.saveGroup(currentGroup);
         return "redirect:/groups";
     }
 
