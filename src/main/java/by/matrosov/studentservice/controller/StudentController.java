@@ -83,6 +83,16 @@ public class StudentController {
         return "redirect:/students";
     }
 
+    @ModelAttribute("allGroups")
+    public List<Group> getAllGroups(){
+        return studentService.getAllGroups();
+    }
 
-    //:TODO "add student" button with select options, button on <td></td> section
+    @ModelAttribute("genderOptions")
+    public char[] getGenderOptions(){
+        char[] array = new char[2];
+        array[0] = 'м';
+        array[1] = 'ж';
+        return array;
+    }
 }

@@ -53,8 +53,16 @@
                             <td><input type="text" th:field="*{lastName}" placeholder="LAST NAME"/></td>
                             <td><input type="text" th:field="*{patronymic}" placeholder="PATRONYMIC"/></td>
                             <!-- <td><input type="date" th:field="*{birthday}" placeholder="BIRTHDAY"/></td> -->
-                            <td><input type="text" th:field="*{sex}" placeholder="SEX"/></td>
-                            <td><input type="text" th:field="*{group}" placeholder="GROUP"/></td>
+                            <td>
+                                <select th:field="*{sex}">
+                                    <option th:each="gender : ${genderOptions}" th:value="${gender}" th:text="${gender}">Dropdown</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select th:field="*{group}">
+                                    <option th:each="group : ${allGroups}" th:value="${group.groupId}" th:text="${group.groupName}">Dropdown</option>
+                                </select>
+                            </td>
                             <td><input type="text" th:field="*{educationYear}" placeholder="EDUCATION YEAR"/></td>
                             <td>
                                 <button type="submit">Add</button>
