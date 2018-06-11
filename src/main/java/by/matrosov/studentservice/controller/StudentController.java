@@ -48,6 +48,10 @@ public class StudentController {
         List<Group> groupList = groupService.getAllGroups();
         modelAndView.addObject("groupList", groupList);
         modelAndView.setViewName("groups");
+
+        //for add new group
+        //can i create individual @ModelAttribute for this?
+        modelAndView.addObject("group", new Group());
         return modelAndView;
     }
 
@@ -111,6 +115,13 @@ public class StudentController {
         //add @valid, bindingResult
         studentService.editStudent(student); //rename on save
         return "redirect:/students";
+    }
+
+    @RequestMapping(value = "/groups/add", method = RequestMethod.POST)
+    public String addGroup(Group group){
+        //add @valid, bindingResult
+        groupService.saveGroup(group);
+        return "redirect:/groups";
     }
 
     @ModelAttribute("allGroups")

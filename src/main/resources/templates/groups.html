@@ -8,7 +8,7 @@
     <p>Hello groups</p>
     <div class="container">
         <div th:if="${not #lists.isEmpty(groupList)}">
-            <h2>Table of Users</h2>
+            <h2>Table of Groups</h2>
             <table class="table table-striped">
                 <tr>
                     <th>Id</th>
@@ -29,6 +29,28 @@
                     </td>
                 </tr>
             </table>
+
+            <!-- add new group-->
+            <div>
+                <h3>Here u can add new group</h3>
+                <form th:action="@{/groups/add}" th:object="${group}" method="post">
+                    <table>
+                        <tr>
+                            <th>Group name</th>
+                            <th>Curator name</th>
+                            <th>Specialty</th>
+                        </tr>
+                        <tr>
+                            <td><input type="text" th:field="*{groupName}" placeholder="GROUP NAME"/></td>
+                            <td><input type="text" th:field="*{curatorName}" placeholder="CURATOR NAME"/></td>
+                            <td><input type="text" th:field="*{specialty}" placeholder="SPECIALTY"/></td>
+                            <td>
+                                <button type="submit">Add</button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
         </div>
     </div>
 </body>
