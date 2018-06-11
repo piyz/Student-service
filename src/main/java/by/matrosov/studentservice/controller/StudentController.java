@@ -74,10 +74,30 @@ public class StudentController {
         studentExist.setFirstName(student.getFirstName());
         studentExist.setLastName(student.getLastName());
 
-        studentService.editStudent(studentExist);
+        studentService.editStudent(studentExist); //rename to save
         //model.addAttribute("studentId", studentExist);
 
         return "redirect:/students";
+    }
+
+    @RequestMapping(value = "/groups/edit", method = RequestMethod.GET)
+    public String getEditGroupPage(@RequestParam(name = "groupId") long groupId, Model model){
+        Group group = groupService.getGroupById(groupId);
+        model.addAttribute("group", group);
+        return "groups-edit";
+    }
+
+    @RequestMapping(value = "/groups/edit", method = RequestMethod.POST)
+    public String editGroup(@RequestParam(name = "groupId") long groupId, Group group){
+        //impl errors with binding result
+        //add @valid to group
+        //check null
+        Group groupExist = groupService.getGroupById(groupId);
+        groupExist.setGroupName(group.getGroupName());
+        groupExist.setCuratorName(group.getCuratorName());
+        groupExist.setSpecialty(group.getSpecialty());
+        groupService.saveGroup(groupExist);
+        return "redirect:/groups";
     }
 
     @RequestMapping(value = "/student/add", method = RequestMethod.POST)
