@@ -8,4 +8,5 @@ public interface GroupService {
     List<Group> getAllGroups();
     Group getGroupById(long groupId);
     void saveGroup(Group group);
+    void removeGroup(long groupId);
 }

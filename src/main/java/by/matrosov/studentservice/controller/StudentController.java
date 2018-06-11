@@ -57,6 +57,12 @@ public class StudentController {
         return "redirect:/students";
     }
 
+    @RequestMapping(value = "/groups/delete", method = RequestMethod.GET)
+    public String deleteGroup(@RequestParam(name = "groupId") long groupId) {
+        groupService.removeGroup(groupId);
+        return "redirect:/groups";
+    }
+
     @RequestMapping(value = "/student/edit", method = RequestMethod.GET)
     public String getEditStudentPage(@RequestParam(name = "studentId") long studentId, Model model){
         Student student = studentService.getStudentById(studentId);

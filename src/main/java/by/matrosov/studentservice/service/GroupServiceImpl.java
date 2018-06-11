@@ -31,4 +31,9 @@ public class GroupServiceImpl implements GroupService{
     public void saveGroup(Group group) {
         groupDao.save(group);
     }
+
+    @Override
+    public void removeGroup(long groupId) {
+        groupDao.deleteById(groupId);
+    }
 }
