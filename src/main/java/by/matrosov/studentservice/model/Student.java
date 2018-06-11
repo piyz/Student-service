@@ -25,8 +25,8 @@ public class Student {
     @Column(name = "birthday")
     private Date birthday;
 
-    @Column(name = "sex")
-    private char sex;
+    @Column(name = "gender")
+    private char gender;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="group_id")
@@ -75,12 +75,12 @@ public class Student {
         this.birthday = birthday;
     }
 
-    public char getSex() {
-        return sex;
+    public char getGender() {
+        return gender;
     }
 
-    public void setSex(char sex) {
-        this.sex = sex;
+    public void setGender(char gender) {
+        this.gender = gender;
     }
 
     public Group getGroup() {

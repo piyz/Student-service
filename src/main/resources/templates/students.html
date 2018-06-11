@@ -16,7 +16,7 @@
                     <th>Last Name</th>
                     <th>Patronymic</th>
                     <th>Birthday</th>
-                    <th>Sex</th>
+                    <th>Gender</th>
                     <th>Group</th>
                     <th>Education Year</th>
                 </tr>
@@ -26,7 +26,7 @@
                     <td th:text="${student.lastName}"></td>
                     <td th:text="${student.patronymic}"></td>
                     <td th:text="${student.birthday}"></td>
-                    <td th:text="${student.sex}"></td>
+                    <td th:text="${student.gender}"></td>
                     <td th:text="${student.group.groupName}"></td>
                     <td th:text="${student.educationYear}"></td>
                     <td>
@@ -45,7 +45,7 @@
                             <th>Last Name</th>
                             <th>Patronymic</th>
                             <!-- <th>Birthday</th> -->
-                            <th>Sex</th>
+                            <th>Gender</th>
                             <th>Group</th>
                             <th>Education Year</th>
                         </tr>
@@ -55,7 +55,7 @@
                             <td><input type="text" th:field="*{patronymic}" placeholder="PATRONYMIC"/></td>
                             <!-- <td><input type="date" th:field="*{birthday}" placeholder="BIRTHDAY"/></td> -->
                             <td>
-                                <select th:field="*{sex}">
+                                <select th:field="*{gender}">
                                     <option th:each="gender : ${genderOptions}" th:value="${gender}" th:text="${gender}">Dropdown</option>
                                 </select>
                             </td>

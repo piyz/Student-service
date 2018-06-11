@@ -7,7 +7,7 @@ create table students
   last_name      varchar(32) not null,
   patronymic     varchar(32) null,
   birthday       date        not null,
-  sex            char        not null,
+  gender            char        not null,
   group_id       int         not null,
   education_year int         not null,
   constraint students_groups_group_id_fk

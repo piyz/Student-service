@@ -10,6 +10,5 @@ import java.util.List;
 public interface StudentDao extends JpaRepository<Student, Long> {
     List<Student> getStudentsByGroup(Group group);
     List<Student> getStudentsByBirthday(Date studentBirthday);
-    List<Student> getStudentsBySex(Character sex);
     List<Student> getStudentsByGroup_GroupId(long groupId);
 }
