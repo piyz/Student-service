@@ -1,6 +1,5 @@
 package by.matrosov.studentservice.service;
 
-import by.matrosov.studentservice.model.Group;
 import by.matrosov.studentservice.model.Student;
 
 import java.util.Date;
@@ -14,4 +13,5 @@ public interface StudentService {
     Student getStudentById(long studentId);
     void editStudent(Student student);
     List<Student> getStudentsByGroupId(long groupId);
+    List<Student> getStudentsByLastName(String lastName);
 }

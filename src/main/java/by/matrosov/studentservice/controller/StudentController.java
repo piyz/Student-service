@@ -153,4 +153,13 @@ public class StudentController {
         model.addAttribute("studentList", studentList);
         return "groups-open";
     }
+
+    @RequestMapping(value = "/student/search", method = RequestMethod.GET)
+    public ModelAndView searchStudentsByLastName(@RequestParam("studentLastName") String lastName){
+        List<Student> studentSearchList = studentService.getStudentsByLastName(lastName);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("studentSearchList", studentSearchList);
+        modelAndView.setViewName("students");
+        return modelAndView;
+    }
 }

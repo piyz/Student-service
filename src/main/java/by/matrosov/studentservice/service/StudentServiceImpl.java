@@ -58,4 +58,9 @@ public class StudentServiceImpl implements StudentService{
     public List<Student> getStudentsByGroupId(long groupId) {
         return studentDao.getStudentsByGroup_GroupId(groupId);
     }
+
+    @Override
+    public List<Student> getStudentsByLastName(String lastName) {
+        return studentDao.getStudentsByLastName(lastName);
+    }
 }
