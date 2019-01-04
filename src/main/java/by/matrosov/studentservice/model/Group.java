@@ -12,6 +12,9 @@ public class Group {
     @Column(name = "group_id")
     private long groupId;
 
+    @Column(name = "enabled")
+    private int enabled;
+
     @Column(name = "group_name")
     private String groupName;
 
@@ -62,5 +65,13 @@ public class Group {
 
     public void setSpecialty(String specialty) {
         this.specialty = specialty;
+    }
+
+    public int getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(int enabled) {
+        this.enabled = enabled;
     }
 }

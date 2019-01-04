@@ -12,4 +12,6 @@ public interface StudentDao extends JpaRepository<Student, Long> {
     List<Student> getStudentsByBirthday(Date studentBirthday);
     List<Student> getStudentsByGroup_GroupId(long groupId);
     List<Student> getStudentsByLastName(String lastName);
+
+    List<Student> getAllByEnabled(int a);
 }

@@ -1,11 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Home page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Admin-student page</title>
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
 </head>
 <body>
     <p>Hello service</p>
+
+    <div class="container">
+        <a th:href="@{/groups}">to group panel</a>
+    </div>
+
+    <form class="col-sm-1" th:action="@{/logout}" method="get">
+        <button>Logout</button>
+    </form>
 
     <!-- search container -->
     <div class="container">
@@ -45,6 +55,9 @@
             <table class="table table-striped">
                 <tr>
                     <th>Id</th>
+                    <th>Username</th>
+                    <!--<th>Password</th>-->
+                    <th>Enabled</th>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Patronymic</th>
@@ -52,9 +65,13 @@
                     <th>Gender</th>
                     <th>Group</th>
                     <th>Education Year</th>
+                    <th>Role</th>
                 </tr>
                 <tr th:each="student : ${studentList}">
                     <td th:text="${student.studentId}"></td>
+                    <td th:text="${student.username}"></td>
+                    <!--<td th:text="${student.password}"></td>-->
+                    <td th:text="${student.enabled}"></td>
                     <td th:text="${student.firstName}"></td>
                     <td th:text="${student.lastName}"></td>
                     <td th:text="${student.patronymic}"></td>
@@ -62,21 +79,24 @@
                     <td th:text="${student.gender}"></td>
                     <td th:text="${student.group.groupName}"></td>
                     <td th:text="${student.educationYear}"></td>
+                    <td th:text="${student.roles}"></td>
                     <td>
-                        <a th:href="@{/student/delete(studentId=${student.studentId})}">Delete</a>
-                        <a th:href="@{/student/edit(studentId=${student.studentId})}">Edit</a>
+                        <a th:href="@{/admin/student/delete(studentId=${student.studentId})}">Delete</a>
+                        <a th:href="@{/admin/student/edit(studentId=${student.studentId})}">Edit</a>
                     </td>
                 </tr>
             </table>
 
             <div>
                 <h3>Here u can add new student</h3>
-                <form th:action="@{/student/add}" th:object="${student}" method="post">
+                <form th:action="@{/admin/student/add}" th:object="${student}" method="post">
                     <table>
                         <tr>
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Patronymic</th>
+                            <th>Username</th>
+                            <th>Password</th>
                             <!-- <th>Birthday</th> -->
                             <th>Gender</th>
                             <th>Group</th>
@@ -86,6 +106,8 @@
                             <td><input type="text" th:field="*{firstName}" placeholder="FIRST NAME"/></td>
                             <td><input type="text" th:field="*{lastName}" placeholder="LAST NAME"/></td>
                             <td><input type="text" th:field="*{patronymic}" placeholder="PATRONYMIC"/></td>
+                            <td><input type="text" th:field="*{username}" placeholder="USERNAME"/></td>
+                            <td><input type="password" th:field="*{password}" placeholder="PASSWORD"/></td>
                             <!-- <td><input type="date" th:field="*{birthday}" placeholder="BIRTHDAY"/></td> -->
                             <td>
                                 <select th:field="*{gender}">

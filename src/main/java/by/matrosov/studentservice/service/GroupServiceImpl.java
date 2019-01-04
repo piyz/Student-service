@@ -10,12 +10,8 @@ import java.util.List;
 @Service
 public class GroupServiceImpl implements GroupService{
 
-    private final GroupDao groupDao;
-
     @Autowired
-    public GroupServiceImpl(GroupDao groupDao) {
-        this.groupDao = groupDao;
-    }
+    private GroupDao groupDao;
 
     @Override
     public List<Group> getAllGroups() {
@@ -29,11 +25,20 @@ public class GroupServiceImpl implements GroupService{
 
     @Override
     public void saveGroup(Group group) {
+        group.setEnabled(1);
         groupDao.save(group);
     }
 
     @Override
     public void removeGroup(long groupId) {
-        groupDao.deleteById(groupId);
+        Group group = groupDao.getOne(groupId);
+        group.setEnabled(0);
+        groupDao.save(group);
+        //groupDao.deleteById(groupId);
+    }
+
+    @Override
+    public List<Group> getByEnabled(int a) {
+        return groupDao.findByEnabled(1);
     }
 }

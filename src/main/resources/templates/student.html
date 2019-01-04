@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>User page</title>
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<p>Hello service</p>
+<p th:text="${hi}"></p>
+
+
+<div class="container">
+    <div th:if="${not #lists.isEmpty(studentList)}">
+        <h2>Table of Users</h2>
+        <table class="table table-striped">
+            <tr>
+                <th>Id</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Patronymic</th>
+                <th>Group</th>
+                <th>Education Year</th>
+            </tr>
+            <tr th:each="student : ${studentList}">
+                <td th:text="${student.studentId}"></td>
+                <td th:text="${student.firstName}"></td>
+                <td th:text="${student.lastName}"></td>
+                <td th:text="${student.patronymic}"></td>
+                <td th:text="${student.group.groupName}"></td>
+                <td th:text="${student.educationYear}"></td>
+            </tr>
+        </table>
+
+        <form class="col-sm-1" th:action="@{/logout}" method="get">
+            <button>Logout</button>
+        </form>
+    </div>
+
+    <div class="container">
+        <a th:href="@{/admin/student}">to admin panel</a>
+    </div>
+</div>
+</body>
+</html>

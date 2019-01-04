@@ -2,6 +2,7 @@ package by.matrosov.studentservice.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "students")
@@ -11,6 +12,15 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "student_id")
     private long studentId;
+
+    @Column(name = "username")
+    private String username;
+
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "enabled")
+    private int enabled;
 
     @Column(name = "first_name")
     private String firstName;
@@ -34,6 +44,36 @@ public class Student {
 
     @Column(name = "education_year")
     private int educationYear;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "students_roles",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(int enabled) {
+        this.enabled = enabled;
+    }
 
     public long getStudentId() {
         return studentId;
@@ -101,5 +141,13 @@ public class Student {
 
     public void setGroup(long groupId) {
         this.group.setGroupId(groupId);
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

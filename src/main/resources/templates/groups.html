@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Groups page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Admin-group page</title>
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
 </head>
 <body>
     <p>Hello groups</p>
+
+    <div class="container">
+        <a th:href="@{/admin/student}">to admin panel</a>
+    </div>
+
     <div class="container">
         <div th:if="${not #lists.isEmpty(groupList)}">
             <h2>Table of Groups</h2>

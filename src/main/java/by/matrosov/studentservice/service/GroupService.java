@@ -9,4 +9,6 @@ public interface GroupService {
     Group getGroupById(long groupId);
     void saveGroup(Group group);
     void removeGroup(long groupId);
+
+    List<Group> getByEnabled(int a);
 }

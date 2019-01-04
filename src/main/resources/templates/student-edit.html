@@ -1,18 +1,28 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Edit student page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Student edit page</title>
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
 </head>
 <body>
     <div class="container">
-        <form th:action="@{/student/edit(studentId=${student.studentId})}" th:object="${student}" method="post">
+        <form th:action="@{/admin/student/edit(studentId=${student.studentId})}" th:object="${student}" method="post">
             <div>
                 <input type="text" th:field="*{firstName}" placeholder="FIRST NAME"/>
             </div>
 
             <div>
                 <input type="text" th:field="*{lastName}" placeholder="LAST NAME"/>
+            </div>
+
+            <div>
+                <input type="text" th:field="*{username}" placeholder="USERNAME"/>
+            </div>
+
+            <div>
+                <input type="password" th:field="*{password}" placeholder="PASSWORD"/>
             </div>
 
             <div>

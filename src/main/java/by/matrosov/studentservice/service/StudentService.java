@@ -11,7 +11,10 @@ public interface StudentService {
     List<Student> getAllStudents();
     void removeStudent(long studentId);
     Student getStudentById(long studentId);
-    void editStudent(Student student);
+    void addStudent(Student student);
     List<Student> getStudentsByGroupId(long groupId);
     List<Student> getStudentsByLastName(String lastName);
+
+    void editStudent(Student student);
+    List<Student> getAllByEnabled(int b);
 }

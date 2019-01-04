@@ -5,6 +5,7 @@ import by.matrosov.studentservice.model.Student;
 import by.matrosov.studentservice.service.GroupService;
 import by.matrosov.studentservice.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,30 +14,47 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
 public class StudentController {
 
-    private final StudentService studentService;
-
-    private final GroupService groupService;
+    @Autowired
+    private StudentService studentService;
 
     @Autowired
-    public StudentController(StudentService studentService, GroupService groupService) {
-        this.studentService = studentService;
-        this.groupService = groupService;
+    private GroupService groupService;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @RequestMapping(value={"/", "/login"}, method = RequestMethod.GET)
+    public String login(){
+        return "login";
     }
 
-    @RequestMapping(method = RequestMethod.GET) //add value = "/students"
+    //for all users
+    @RequestMapping(value = "/students", method = RequestMethod.GET)
+    public String hello(Model model, Principal principal){
+        model.addAttribute("hi", "You are logged in as " + principal.getName());
+
+        List<Student> studentList = studentService.getAllStudents();
+        model.addAttribute("studentList", studentList);
+        model.addAttribute("student", new Student());
+
+        return "student";
+    }
+
+    //only for admin
+    @RequestMapping(value = "/admin/student", method = RequestMethod.GET) //add value = "/students"
     public ModelAndView getStudents(){
         ModelAndView modelAndView = new ModelAndView();
-        List<Student> studentList = studentService.getAllStudents();
+        //List<Student> studentList = studentService.getAllStudents();
+        List<Student> studentList = studentService.getAllByEnabled(1);
         modelAndView.addObject("studentList", studentList);
         modelAndView.setViewName("students");
 
-        //for add student need to create new student here? hello
-        //need to check model.contains('attribute') ? or don't
         modelAndView.addObject("student", new Student());
         //------------------------------------------------------
         return modelAndView;
@@ -45,20 +63,18 @@ public class StudentController {
     @RequestMapping(value = "/groups", method = RequestMethod.GET)
     public ModelAndView getGroups(){
         ModelAndView modelAndView = new ModelAndView();
-        List<Group> groupList = groupService.getAllGroups();
+        List<Group> groupList = groupService.getByEnabled(1);
         modelAndView.addObject("groupList", groupList);
         modelAndView.setViewName("groups");
 
-        //for add new group
-        //can i create individual @ModelAttribute for this?
         modelAndView.addObject("group", new Group());
         return modelAndView;
     }
 
-    @RequestMapping(value = "/student/delete", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/student/delete", method = RequestMethod.GET)
     public String deleteStudent(@RequestParam(name = "studentId") long studentId) {
         studentService.removeStudent(studentId);
-        return "redirect:/students";
+        return "redirect:/admin/student";
     }
 
     @RequestMapping(value = "/groups/delete", method = RequestMethod.GET)
@@ -67,27 +83,29 @@ public class StudentController {
         return "redirect:/groups";
     }
 
-    @RequestMapping(value = "/student/edit", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/student/edit", method = RequestMethod.GET)
     public String getEditStudentPage(@RequestParam(name = "studentId") long studentId, Model model){
         Student student = studentService.getStudentById(studentId);
         model.addAttribute("student", student);
         return "student-edit";
     }
 
-    @RequestMapping(value = "/student/edit", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/student/edit", method = RequestMethod.POST)
     public String editStudent(@RequestParam(name = "studentId") long studentId, Student student){
         //impl errors with binding result
         //add @valid to student
         //check null
         Student studentExist = studentService.getStudentById(studentId);
 
+        studentExist.setUsername(student.getUsername());
+        studentExist.setPassword(bCryptPasswordEncoder.encode(student.getPassword()));
         studentExist.setFirstName(student.getFirstName());
         studentExist.setLastName(student.getLastName());
 
         studentService.editStudent(studentExist); //rename to save
         //model.addAttribute("studentId", studentExist);
 
-        return "redirect:/students";
+        return "redirect:/admin/student";
     }
 
     @RequestMapping(value = "/groups/edit", method = RequestMethod.GET)
@@ -110,11 +128,11 @@ public class StudentController {
         return "redirect:/groups";
     }
 
-    @RequestMapping(value = "/student/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/student/add", method = RequestMethod.POST)
     public String addStudent(Student student){
         //add @valid, bindingResult
-        studentService.editStudent(student); //rename on save
-        return "redirect:/students";
+        studentService.addStudent(student); //rename on save
+        return "redirect:/admin/student";
     }
 
     @RequestMapping(value = "/groups/add", method = RequestMethod.POST)
@@ -126,7 +144,7 @@ public class StudentController {
 
     @ModelAttribute("allGroups")
     public List<Group> getAllGroups(){
-        return groupService.getAllGroups();
+        return groupService.getByEnabled(1);
     }
 
     @ModelAttribute("genderOptions")
