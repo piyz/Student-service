@@ -89,21 +89,26 @@ public class StudentController {
     }
 
     @RequestMapping(value = "/admin/student/edit", method = RequestMethod.POST)
-    public String editStudent(@RequestParam(name = "studentId") long studentId, Student student){
-        //impl errors with binding result
-        //add @valid to student
-        //check null
+    public String editStudent(@RequestParam(name = "studentId") long studentId, @Valid Student student,
+                              BindingResult bindingResult, Model model){
+        if (bindingResult.hasErrors()){
+            return "student-edit";
+        }
+
         Student studentExist = studentService.getStudentById(studentId);
 
-        studentExist.setUsername(student.getUsername());
-        studentExist.setPassword(bCryptPasswordEncoder.encode(student.getPassword()));
         studentExist.setFirstName(student.getFirstName());
         studentExist.setLastName(student.getLastName());
+        studentExist.setPatronymic(student.getPatronymic());
+        studentExist.setUsername(student.getUsername());
+        studentExist.setPassword(bCryptPasswordEncoder.encode(student.getPassword()));
+        studentExist.setGender(student.getGender());
+        studentExist.setGroup(student.getGroup());
+        studentExist.setEducationYear(student.getEducationYear());
 
-        studentService.editStudent(studentExist); //rename to save
-        //model.addAttribute("studentId", studentExist);
-
-        return "redirect:/admin/student";
+        studentService.editStudent(studentExist);
+        model.addAttribute("success", "user edited successfully " + student.getFirstName() + " " + student.getLastName());
+        return "results";
     }
 
     @RequestMapping(value = "/groups/edit", method = RequestMethod.GET)
