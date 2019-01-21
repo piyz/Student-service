@@ -8,12 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
@@ -37,13 +39,12 @@ public class StudentController {
     //for all users
     @RequestMapping(value = "/students", method = RequestMethod.GET)
     public String hello(Model model, Principal principal){
-        model.addAttribute("hi", "You are logged in as " + principal.getName());
+        model.addAttribute("username", "You are logged in as " + principal.getName());
 
         List<Student> studentList = studentService.getAllStudents();
         model.addAttribute("studentList", studentList);
-        model.addAttribute("student", new Student());
 
-        return "student";
+        return "index";
     }
 
     //only for admin
@@ -53,10 +54,7 @@ public class StudentController {
         //List<Student> studentList = studentService.getAllStudents();
         List<Student> studentList = studentService.getAllByEnabled(1);
         modelAndView.addObject("studentList", studentList);
-        modelAndView.setViewName("students");
-
-        modelAndView.addObject("student", new Student());
-        //------------------------------------------------------
+        modelAndView.setViewName("admin");
         return modelAndView;
     }
 
@@ -128,13 +126,6 @@ public class StudentController {
         return "redirect:/groups";
     }
 
-    @RequestMapping(value = "/admin/student/add", method = RequestMethod.POST)
-    public String addStudent(Student student){
-        //add @valid, bindingResult
-        studentService.addStudent(student); //rename on save
-        return "redirect:/admin/student";
-    }
-
     @RequestMapping(value = "/groups/add", method = RequestMethod.POST)
     public String addGroup(Group group){
         //add @valid, bindingResult
@@ -177,7 +168,23 @@ public class StudentController {
         List<Student> studentSearchList = studentService.getStudentsByLastName(lastName);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("studentSearchList", studentSearchList);
-        modelAndView.setViewName("students");
+        modelAndView.setViewName("admin");
         return modelAndView;
+    }
+
+    @RequestMapping(value="/admin/student/add", method=RequestMethod.GET)
+    public String showForm(Model model) {
+        model.addAttribute("student", new Student());
+        return "add-form";
+    }
+
+    @RequestMapping(value="/admin/student/add", method=RequestMethod.POST)
+    public String checkStudentInfo(Model model, @Valid Student student, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "add-form";
+        }
+        studentService.addStudent(student);
+        model.addAttribute("success", "user saved successfully " + student.getFirstName() + " " + student.getLastName());
+        return "results";
     }
 }

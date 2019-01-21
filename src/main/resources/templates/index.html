@@ -7,9 +7,13 @@
     <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
 </head>
 <body>
-<p>Hello service</p>
-<p th:text="${hi}"></p>
+<div class="container">
+    <p th:text="${username}"></p>
+</div>
 
+<div class="container">
+    <a th:href="@{/admin/student}">to admin panel</a>
+</div>
 
 <div class="container">
     <div th:if="${not #lists.isEmpty(studentList)}">
@@ -36,10 +40,6 @@
         <form class="col-sm-1" th:action="@{/logout}" method="get">
             <button>Logout</button>
         </form>
-    </div>
-
-    <div class="container">
-        <a th:href="@{/admin/student}">to admin panel</a>
     </div>
 </div>
 </body>

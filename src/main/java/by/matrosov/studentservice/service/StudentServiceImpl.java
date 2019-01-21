@@ -48,12 +48,9 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public void removeStudent(long studentId) {
-
         Student student = studentDao.getOne(studentId);
         student.setEnabled(0);
         studentDao.save(student);
-
-        //studentDao.deleteById(studentId);
     }
 
     @Override
@@ -61,7 +58,7 @@ public class StudentServiceImpl implements StudentService{
         return studentDao.getOne(studentId);
     }
 
-    @Override //add student
+    @Override
     public void addStudent(Student student) {
         student.setPassword(bCryptPasswordEncoder.encode(student.getPassword()));
         Role userGroup = roleDao.findByRoleName("USER");

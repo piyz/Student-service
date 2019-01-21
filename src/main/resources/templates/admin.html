@@ -13,9 +13,9 @@
         <a th:href="@{/groups}">to group panel</a>
     </div>
 
-    <form class="col-sm-1" th:action="@{/logout}" method="get">
-        <button>Logout</button>
-    </form>
+    <div class="container">
+        <a th:href="@{/admin/student/add}">add users</a>
+    </div>
 
     <!-- search container -->
     <div class="container">
@@ -87,6 +87,8 @@
                 </tr>
             </table>
 
+            <!-- add new student -->
+            <!--
             <div>
                 <h3>Here u can add new student</h3>
                 <form th:action="@{/admin/student/add}" th:object="${student}" method="post">
@@ -97,7 +99,7 @@
                             <th>Patronymic</th>
                             <th>Username</th>
                             <th>Password</th>
-                            <!-- <th>Birthday</th> -->
+                             <th>Birthday</th>
                             <th>Gender</th>
                             <th>Group</th>
                             <th>Education Year</th>
@@ -108,7 +110,7 @@
                             <td><input type="text" th:field="*{patronymic}" placeholder="PATRONYMIC"/></td>
                             <td><input type="text" th:field="*{username}" placeholder="USERNAME"/></td>
                             <td><input type="password" th:field="*{password}" placeholder="PASSWORD"/></td>
-                            <!-- <td><input type="date" th:field="*{birthday}" placeholder="BIRTHDAY"/></td> -->
+                             <td><input type="date" th:field="*{birthday}" placeholder="BIRTHDAY"/></td>
                             <td>
                                 <select th:field="*{gender}">
                                     <option th:each="gender : ${genderOptions}" th:value="${gender}" th:text="${gender}">Dropdown</option>
@@ -126,9 +128,12 @@
                         </tr>
                     </table>
                 </form>
-            </div>
-
+            </div> -->
         </div>
     </div>
+
+    <form class="col-sm-1" th:action="@{/logout}" method="get">
+        <button>Logout</button>
+    </form>
 </body>
 </html>

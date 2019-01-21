@@ -1,6 +1,8 @@
 package by.matrosov.studentservice.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.Set;
 
@@ -13,18 +15,24 @@ public class Student {
     @Column(name = "student_id")
     private long studentId;
 
+    @NotNull
     @Column(name = "username")
     private String username;
 
+    @NotNull
     @Column(name = "password")
     private String password;
 
     @Column(name = "enabled")
     private int enabled;
 
+    @NotNull
+    @Size(min = 3, max = 30)
     @Column(name = "first_name")
     private String firstName;
 
+    @NotNull
+    @Size(min = 3, max = 30)
     @Column(name = "last_name")
     private String lastName;
 
@@ -42,6 +50,7 @@ public class Student {
     @JoinColumn(name="group_id")
     private Group group;
 
+    @NotNull
     @Column(name = "education_year")
     private int educationYear;
 
