@@ -31,12 +31,25 @@ public class StudentController {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @ModelAttribute("allGroups")
+    public List<Group> getAllGroups(){
+        return groupService.getByEnabled(1);
+    }
+
+    @ModelAttribute("genderOptions")
+    public char[] getGenderOptions(){
+        char[] array = new char[2];
+        array[0] = 'м';
+        array[1] = 'ж';
+        return array;
+    }
+
     @RequestMapping(value={"/", "/login"}, method = RequestMethod.GET)
     public String login(){
         return "login";
     }
 
-    //for all users
+
     @RequestMapping(value = "/students", method = RequestMethod.GET)
     public String hello(Model model, Principal principal){
         model.addAttribute("username", "You are logged in as " + principal.getName());
@@ -47,7 +60,17 @@ public class StudentController {
         return "index";
     }
 
-    //only for admin
+    @RequestMapping(value = "/student/search", method = RequestMethod.GET)
+    public ModelAndView searchStudentsByLastName(@RequestParam("studentLastName") String lastName){
+        List<Student> studentSearchList = studentService.getStudentsByLastName(lastName);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("studentSearchList", studentSearchList);
+        modelAndView.setViewName("admin");
+        return modelAndView;
+    }
+
+    //-----------
+
     @RequestMapping(value = "/admin/student", method = RequestMethod.GET) //add value = "/students"
     public ModelAndView getStudents(){
         ModelAndView modelAndView = new ModelAndView();
@@ -58,27 +81,26 @@ public class StudentController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/groups", method = RequestMethod.GET)
-    public ModelAndView getGroups(){
-        ModelAndView modelAndView = new ModelAndView();
-        List<Group> groupList = groupService.getByEnabled(1);
-        modelAndView.addObject("groupList", groupList);
-        modelAndView.setViewName("groups");
+    @RequestMapping(value="/admin/student/add", method=RequestMethod.GET)
+    public String showStudentForm(Model model) {
+        model.addAttribute("student", new Student());
+        return "student-add-form";
+    }
 
-        modelAndView.addObject("group", new Group());
-        return modelAndView;
+    @RequestMapping(value="/admin/student/add", method=RequestMethod.POST)
+    public String checkStudentInfo(Model model, @Valid Student student, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "student-add-form";
+        }
+        studentService.addStudent(student);
+        model.addAttribute("success", "user saved successfully " + student.getFirstName() + " " + student.getLastName());
+        return "results";
     }
 
     @RequestMapping(value = "/admin/student/delete", method = RequestMethod.GET)
     public String deleteStudent(@RequestParam(name = "studentId") long studentId) {
         studentService.removeStudent(studentId);
         return "redirect:/admin/student";
-    }
-
-    @RequestMapping(value = "/groups/delete", method = RequestMethod.GET)
-    public String deleteGroup(@RequestParam(name = "groupId") long groupId) {
-        groupService.removeGroup(groupId);
-        return "redirect:/groups";
     }
 
     @RequestMapping(value = "/admin/student/edit", method = RequestMethod.GET)
@@ -111,14 +133,31 @@ public class StudentController {
         return "results";
     }
 
-    @RequestMapping(value = "/groups/edit", method = RequestMethod.GET)
+    //-----------
+
+    @RequestMapping(value = "/admin/group", method = RequestMethod.GET)
+    public ModelAndView getGroups(){
+        ModelAndView modelAndView = new ModelAndView();
+        List<Group> groupList = groupService.getByEnabled(1);
+        modelAndView.addObject("groupList", groupList);
+        modelAndView.setViewName("groups");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/admin/group/delete", method = RequestMethod.GET)
+    public String deleteGroup(@RequestParam(name = "groupId") long groupId) {
+        groupService.removeGroup(groupId);
+        return "redirect:/admin/group";
+    }
+
+    @RequestMapping(value = "/admin/group/edit", method = RequestMethod.GET)
     public String getEditGroupPage(@RequestParam(name = "groupId") long groupId, Model model){
         Group group = groupService.getGroupById(groupId);
         model.addAttribute("group", group);
-        return "groups-edit";
+        return "group-edit";
     }
 
-    @RequestMapping(value = "/groups/edit", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/group/edit", method = RequestMethod.POST)
     public String editGroup(@RequestParam(name = "groupId") long groupId, Group group){
         //impl errors with binding result
         //add @valid to group
@@ -131,65 +170,34 @@ public class StudentController {
         return "redirect:/groups";
     }
 
-    @RequestMapping(value = "/groups/add", method = RequestMethod.POST)
-    public String addGroup(Group group){
-        //add @valid, bindingResult
-        groupService.saveGroup(group);
-        return "redirect:/groups";
-    }
-
-    @ModelAttribute("allGroups")
-    public List<Group> getAllGroups(){
-        return groupService.getByEnabled(1);
-    }
-
-    @ModelAttribute("genderOptions")
-    public char[] getGenderOptions(){
-        char[] array = new char[2];
-        array[0] = 'м';
-        array[1] = 'ж';
-        return array;
-    }
-
-    @RequestMapping(value = "groups/move", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/group/move", method = RequestMethod.GET)
     public String moveGroup(@RequestParam(name = "groupId") long groupId){
         Group currentGroup = groupService.getGroupById(groupId);
         long currentGroupName = Long.parseLong(currentGroup.getGroupName());
         long newGroupName = currentGroupName + 100;
         currentGroup.setGroupName(String.valueOf(newGroupName));
         groupService.saveGroup(currentGroup);
-        return "redirect:/groups";
+        return "redirect:/admin/group";
     }
 
-    @RequestMapping(value = "groups/open", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/group/open", method = RequestMethod.GET)
     public String openGroup(@RequestParam(name = "groupId") long groupId, Model model){
         List<Student> studentList = studentService.getStudentsByGroupId(groupId);
         model.addAttribute("studentList", studentList);
-        return "groups-open";
+        return "group-open";
     }
 
-    @RequestMapping(value = "/student/search", method = RequestMethod.GET)
-    public ModelAndView searchStudentsByLastName(@RequestParam("studentLastName") String lastName){
-        List<Student> studentSearchList = studentService.getStudentsByLastName(lastName);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("studentSearchList", studentSearchList);
-        modelAndView.setViewName("admin");
-        return modelAndView;
-    }
-
-    @RequestMapping(value="/admin/student/add", method=RequestMethod.GET)
-    public String showForm(Model model) {
-        model.addAttribute("student", new Student());
-        return "add-form";
-    }
-
-    @RequestMapping(value="/admin/student/add", method=RequestMethod.POST)
-    public String checkStudentInfo(Model model, @Valid Student student, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "add-form";
-        }
-        studentService.addStudent(student);
-        model.addAttribute("success", "user saved successfully " + student.getFirstName() + " " + student.getLastName());
+    @RequestMapping(value = "/admin/group/add", method = RequestMethod.POST)
+    public String addGroup(@Valid Group group, Model model){
+        //TODO bindingResult, validation
+        groupService.saveGroup(group);
+        model.addAttribute("success", "group saved successfully " + group.getGroupName());
         return "results";
+    }
+
+    @RequestMapping(value="/admin/group/add", method=RequestMethod.GET)
+    public String showGroupForm(Model model) {
+        model.addAttribute("group", new Group());
+        return "group-add-form";
     }
 }

@@ -7,10 +7,12 @@
     <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
 </head>
 <body>
-    <p>Hello groups</p>
+    <div class="container">
+        <a th:href="@{/admin/student}">to admin menu</a>
+    </div>
 
     <div class="container">
-        <a th:href="@{/admin/student}">to admin panel</a>
+        <a th:href="@{/admin/group/add}">add group</a>
     </div>
 
     <div class="container">
@@ -29,18 +31,18 @@
                     <td th:text="${group.curatorName}"></td>
                     <td th:text="${group.specialty}"></td>
                     <td>
-                        <a th:href="@{/groups/open(groupId=${group.groupId})}">Open</a>
-                        <a th:href="@{/groups/move(groupId=${group.groupId})}">Move</a>
-                        <a th:href="@{/groups/edit(groupId=${group.groupId})}">Edit</a>
-                        <a th:href="@{/groups/delete(groupId=${group.groupId})}">Delete</a>
+                        <a th:href="@{/admin/group/open(groupId=${group.groupId})}">Open</a>
+                        <a th:href="@{/admin/group/move(groupId=${group.groupId})}">Move</a>
+                        <a th:href="@{/admin/group/edit(groupId=${group.groupId})}">Edit</a>
+                        <a th:href="@{/admin/group/delete(groupId=${group.groupId})}">Delete</a>
                     </td>
                 </tr>
             </table>
 
-            <!-- add new group-->
+            <!-- add new group
             <div>
                 <h3>Here u can add new group</h3>
-                <form th:action="@{/groups/add}" th:object="${group}" method="post">
+                <form th:action="@{/admin/group/add}" th:object="${group}" method="post">
                     <table>
                         <tr>
                             <th>Group name</th>
@@ -57,7 +59,7 @@
                         </tr>
                     </table>
                 </form>
-            </div>
+            </div> -->
         </div>
     </div>
 </body>

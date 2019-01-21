@@ -12,7 +12,7 @@
 </div>
 
 <div class="container">
-    <a th:href="@{/admin/student}">to admin panel</a>
+    <a th:href="@{/admin/student}">to admin menu</a>
 </div>
 
 <div class="container">
@@ -37,7 +37,7 @@
             </tr>
         </table>
 
-        <form class="col-sm-1" th:action="@{/logout}" method="get">
+        <form th:action="@{/logout}" method="get">
             <button>Logout</button>
         </form>
     </div>

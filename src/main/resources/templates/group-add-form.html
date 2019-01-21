@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Group add page</title>
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<form action="#" th:action="@{/admin/group/add}" th:object="${group}" method="post">
+    <table>
+        <tr>
+            <td>Group Name</td>
+            <td><input type="text" th:field="*{groupName}" /></td>
+            <td th:if="${#fields.hasErrors('groupName')}" th:errors="*{groupName}">Group Name Error</td>
+        </tr>
+        <tr>
+            <td>Curator Name</td>
+            <td><input type="text" th:field="*{curatorName}" /></td>
+            <td th:if="${#fields.hasErrors('curatorName')}" th:errors="*{curatorName}">Curator Name Error</td>
+        </tr>
+        <tr>
+            <td>Specialty</td>
+            <td><input type="text" th:field="*{specialty}" /></td>
+            <td th:if="${#fields.hasErrors('specialty')}" th:errors="*{specialty}">Specialty Error</td>
+        </tr>
+        <tr>
+            <td><button type="submit">Submit</button></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
