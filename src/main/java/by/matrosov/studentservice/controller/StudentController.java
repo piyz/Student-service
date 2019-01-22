@@ -49,6 +49,7 @@ public class StudentController {
         return "login";
     }
 
+    //-----------
 
     @RequestMapping(value = "/students", method = RequestMethod.GET)
     public String hello(Model model, Principal principal){
@@ -71,7 +72,7 @@ public class StudentController {
 
     //-----------
 
-    @RequestMapping(value = "/admin/student", method = RequestMethod.GET) //add value = "/students"
+    @RequestMapping(value = "/admin/student", method = RequestMethod.GET)
     public ModelAndView getStudents(){
         ModelAndView modelAndView = new ModelAndView();
         //List<Student> studentList = studentService.getAllStudents();
@@ -89,6 +90,7 @@ public class StudentController {
 
     @RequestMapping(value="/admin/student/add", method=RequestMethod.POST)
     public String checkStudentInfo(Model model, @Valid Student student, BindingResult bindingResult) {
+        //TODO add birthday
         if (bindingResult.hasErrors()) {
             return "student-add-form";
         }
@@ -107,14 +109,14 @@ public class StudentController {
     public String getEditStudentPage(@RequestParam(name = "studentId") long studentId, Model model){
         Student student = studentService.getStudentById(studentId);
         model.addAttribute("student", student);
-        return "student-edit";
+        return "student-edit-form";
     }
 
     @RequestMapping(value = "/admin/student/edit", method = RequestMethod.POST)
     public String editStudent(@RequestParam(name = "studentId") long studentId, @Valid Student student,
                               BindingResult bindingResult, Model model){
         if (bindingResult.hasErrors()){
-            return "student-edit";
+            return "student-edit-form";
         }
 
         Student studentExist = studentService.getStudentById(studentId);
@@ -131,73 +133,5 @@ public class StudentController {
         studentService.editStudent(studentExist);
         model.addAttribute("success", "user edited successfully " + student.getFirstName() + " " + student.getLastName());
         return "results";
-    }
-
-    //-----------
-
-    @RequestMapping(value = "/admin/group", method = RequestMethod.GET)
-    public ModelAndView getGroups(){
-        ModelAndView modelAndView = new ModelAndView();
-        List<Group> groupList = groupService.getByEnabled(1);
-        modelAndView.addObject("groupList", groupList);
-        modelAndView.setViewName("groups");
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/admin/group/delete", method = RequestMethod.GET)
-    public String deleteGroup(@RequestParam(name = "groupId") long groupId) {
-        groupService.removeGroup(groupId);
-        return "redirect:/admin/group";
-    }
-
-    @RequestMapping(value = "/admin/group/edit", method = RequestMethod.GET)
-    public String getEditGroupPage(@RequestParam(name = "groupId") long groupId, Model model){
-        Group group = groupService.getGroupById(groupId);
-        model.addAttribute("group", group);
-        return "group-edit";
-    }
-
-    @RequestMapping(value = "/admin/group/edit", method = RequestMethod.POST)
-    public String editGroup(@RequestParam(name = "groupId") long groupId, Group group){
-        //impl errors with binding result
-        //add @valid to group
-        //check null
-        Group groupExist = groupService.getGroupById(groupId);
-        groupExist.setGroupName(group.getGroupName());
-        groupExist.setCuratorName(group.getCuratorName());
-        groupExist.setSpecialty(group.getSpecialty());
-        groupService.saveGroup(groupExist);
-        return "redirect:/groups";
-    }
-
-    @RequestMapping(value = "/admin/group/move", method = RequestMethod.GET)
-    public String moveGroup(@RequestParam(name = "groupId") long groupId){
-        Group currentGroup = groupService.getGroupById(groupId);
-        long currentGroupName = Long.parseLong(currentGroup.getGroupName());
-        long newGroupName = currentGroupName + 100;
-        currentGroup.setGroupName(String.valueOf(newGroupName));
-        groupService.saveGroup(currentGroup);
-        return "redirect:/admin/group";
-    }
-
-    @RequestMapping(value = "/admin/group/open", method = RequestMethod.GET)
-    public String openGroup(@RequestParam(name = "groupId") long groupId, Model model){
-        List<Student> studentList = studentService.getStudentsByGroupId(groupId);
-        model.addAttribute("studentList", studentList);
-        return "group-open";
-    }
-
-    @RequestMapping(value = "/admin/group/add", method = RequestMethod.POST)
-    public String addGroup(@Valid Group group, Model model){
-        //TODO bindingResult, validation
-        groupService.saveGroup(group);
-        model.addAttribute("success", "group saved successfully " + group.getGroupName());
-        return "results";
-    }
-
-    @RequestMapping(value="/admin/group/add", method=RequestMethod.GET)
-    public String showGroupForm(Model model) {
-        model.addAttribute("group", new Group());
-        return "group-add-form";
     }
 }

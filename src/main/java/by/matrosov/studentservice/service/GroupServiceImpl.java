@@ -25,7 +25,7 @@ public class GroupServiceImpl implements GroupService{
 
     @Override
     public void saveGroup(Group group) {
-        group.setEnabled(1);
+        //group.setEnabled(1);
         groupDao.save(group);
     }
 
@@ -34,7 +34,6 @@ public class GroupServiceImpl implements GroupService{
         Group group = groupDao.getOne(groupId);
         group.setEnabled(0);
         groupDao.save(group);
-        //groupDao.deleteById(groupId);
     }
 
     @Override

@@ -1,6 +1,8 @@
 package by.matrosov.studentservice.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -15,12 +17,18 @@ public class Group {
     @Column(name = "enabled")
     private int enabled;
 
+    @NotNull
+    @Size(min = 3, max = 30)
     @Column(name = "group_name")
     private String groupName;
 
+    @NotNull
+    @Size(min = 3, max = 30)
     @Column(name = "curator_name")
     private String curatorName;
 
+    @NotNull
+    @Size(min = 3, max = 30)
     @Column(name = "specialty")
     private String specialty;
 
